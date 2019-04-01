@@ -2,7 +2,8 @@ from math import floor, ceil
 from fractions import gcd
 from functools import reduce
 from tqdm import tqdm, trange
-with open("message6.txt", encoding="utf8") as file:
+num = 6
+with open("message" + str(num) + ".txt", encoding="utf8") as file:
     message = file.read()
 
 def find_gcd(list):
@@ -29,4 +30,23 @@ def taille_cle(length, number):
 tailleCle = taille_cle(4,10)
 print(tailleCle)
 
+intervalleCle = []
 
+'''
+for i in range (6):
+    intervalleCle.append("||")
+    old = ord(message[i*tailleCle])
+    for j in range (tailleCle):
+        print(ord(message[i*tailleCle+j]))
+        intervalleCle.append(ord(message[i*tailleCle+j])-old)
+        old = ord(message[i*tailleCle+j])
+print(intervalleCle)
+'''
+
+intervalle = []
+
+for i in range (6):
+    intervalle.append("||")
+    for j in range (tailleCle):
+        intervalle.append([message[i*tailleCle+j],ord(message[i*tailleCle+j])])
+print(intervalle)

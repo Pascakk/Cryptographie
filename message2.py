@@ -1,7 +1,7 @@
-with open("message6.txt", encoding="utf8") as file:
+with open("message5.txt", encoding="utf8") as file:
     message = file.read()
     signature = "Joël"
-    tailleCle = 4
+    tailleCle = 3
     cle = []
     for i in range(1, tailleCle+1):
         cle.append(ord(message[-i]) - ord(signature[-i]))
