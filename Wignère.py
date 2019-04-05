@@ -6,15 +6,22 @@ num = 6
 with open("message" + str(num) + ".txt", encoding="utf8") as file:
     message = file.read()
 
+tailleMessage = len(message)
+
 def find_gcd(list):
     x = reduce(gcd, list)
     return x
 
+
 def taille_cle(length, number):
     distances = []
-    for ref in range(len(message)-length):
+    sequences = []
+    for ref in range(tailleMessage-length):
         if len(distances) > number:
-            break
+            sequences.append([pattern, find_gcd(distances)])
+            if len(sequences) > 4:
+                print(sequences)
+                break
         last = ref
         pattern = message[ref:ref+length]
         distances = []
@@ -25,28 +32,19 @@ def taille_cle(length, number):
                     last = i
                     print(str(ref) + ' "' + pattern + '"' + " pareil que " + str(i) + ' "' + test + '"')
                     print(distances)
-    return find_gcd(distances)
+    return sequences[0][1] #il faudrait prendre le pgcd le plus fréquent
 
-tailleCle = taille_cle(4,10)
+tailleCle = taille_cle(4,6)
 print(tailleCle)
 
-intervalleCle = []
 
-'''
-for i in range (6):
-    intervalleCle.append("||")
-    old = ord(message[i*tailleCle])
-    for j in range (tailleCle):
-        print(ord(message[i*tailleCle+j]))
-        intervalleCle.append(ord(message[i*tailleCle+j])-old)
-        old = ord(message[i*tailleCle+j])
-print(intervalleCle)
-'''
+T = []
+for i in range(tailleCle):
+    j = 0
+    T.append([])
+    for j in range(floor(tailleMessage/tailleCle)):
+        T[i].append(message[i+j*tailleCle])
 
-intervalle = []
-
-for i in range (6):
-    intervalle.append("||")
-    for j in range (tailleCle):
-        intervalle.append([message[i*tailleCle+j],ord(message[i*tailleCle+j])])
-print(intervalle)
+print(T)
+print(len(T))
+    
