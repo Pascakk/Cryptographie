@@ -2,8 +2,11 @@ from math import floor, ceil
 from fractions import gcd
 from functools import reduce
 from tqdm import tqdm, trange
-num = 6 # n° du fichier à décoder
-ref = ord(" ") #caractère supposé le plus utilisé (e ou l'espace en francais
+from collections import Counter # Recherche de caractère le plus fréquent
+# n° du fichier à décoder
+num = 6
+# caractère supposé le plus utilisé (e, a ou l'espace en francais)
+ref = ord(" ")
 
 
 with open("message" + str(num) + ".txt", encoding="utf8") as file:
@@ -29,12 +32,14 @@ def find_gcd(list):
 
 def taille_cle(length, nbRepetitions, nbSequences):
     '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. On cherche 'nbRepetitions' répétitions de 'length' caractères nbSequences fois.'''
-    distances = [] #tableau contenant les distances entre deux répétitions
-    sequences = [] #contient des tuples : les séquences répétées et le gcd entre les distances de ses répétitions
+    distances = [] # Tableau contenant les distances entre deux répétitions
+    sequences = [] # Contient les séquences trouvées vérifiant les propriétés demandées (utile pour le débug)
+    taillesPossibles = [] # Contient les pgcd des distances entre les séquences répétées
     for ref in range(tailleMessage-length):
         # Conditions d'arrêt
         if len(distances) > nbRepetitions: # Quand on a trouvé le bon nombre de répétitions
-            sequences.append([pattern, find_gcd(distances)]) # Ajout de la séquence et du pgcd entre les distances de ses répétitions dans le tableau -> [sequence,pgcd]
+            sequences.append(pattern) # Ajout de la séquence et du pgcd entre les distances de ses répétitions dans le tableau -> [sequence,pgcd]
+            taillesPossibles.append(find_gcd(distances))
             if len(sequences) > nbSequences: # Quand on a trouvé le bon nombre de séquences répétées nbRepetitions fois dans le texte
                 print(sequences)
                 break
@@ -51,7 +56,7 @@ def taille_cle(length, nbRepetitions, nbSequences):
                     print(str(ref) + ' "' + pattern + '"' + " pareil que " + str(i) + ' "' + test + '"')
                     print(distances)
                     """
-    return sequences[0][1] #il faudrait prendre le pgcd le plus fréquent pour plus de précision
+    return Counter(taillesPossibles).most_common()[0][0] # Renvoie la taille de la clé (valeur possible la plus fréquente)
 
 tailleCle = taille_cle(4, 3, 4) # taille de la séquence, nombre de répétitions, nombre de séquence vérifiant ces critères
 print(tailleCle)
@@ -77,10 +82,12 @@ for i in range(tailleCle):
     print(occurences)
     cle.append(ord(plusFrequent(occurences))-ref)
 
-#décryptage du message
+# Décryptage du message
 clair = ""
 indice = 0
 for i in range(tailleMessage):
     clair += chr(ord(message[i]) - cle[i%tailleCle])
+
+# Affichage
 print(clair)
 print(cle)

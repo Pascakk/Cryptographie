@@ -1,3 +1,6 @@
+# Fonctionne pour les messages 2 à 5
+# erreur d'execution avec le 4
+
 with open("message5.txt", encoding="utf8") as file:
     message = file.read()
     signature = "Joël"
@@ -13,7 +16,7 @@ with open("message5.txt", encoding="utf8") as file:
         if message[-i] != "\n":
             try:
                 caractere = ord(message[-i]) - cle[posCle]
-                assert caractere >= 0, f"Caractere {caractere} est négatif. {ord(message[i])}, {cle[posCle]}"
+                assert caractere >= 0, f"Caractere {caractere} est négatif. {ord(message[-i])}, {cle[posCle]}"
             except AssertionError:
                 caractere = 0
             decrypte = chr(caractere) + decrypte
