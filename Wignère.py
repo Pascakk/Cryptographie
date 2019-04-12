@@ -2,8 +2,8 @@ from math import floor, ceil
 from fractions import gcd
 from functools import reduce
 from tqdm import tqdm, trange
-num = 6 #n° du fichier à décoder
-ref = ord(" ") #caractère supposé le plus utilisé
+num = 6 # n° du fichier à décoder
+ref = ord(" ") #caractère supposé le plus utilisé (e ou l'espace en francais
 
 
 with open("message" + str(num) + ".txt", encoding="utf8") as file:
@@ -27,32 +27,36 @@ def find_gcd(list):
     x = reduce(gcd, list)
     return x
 
-def taille_cle(length, number):
-    '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. On cherche 'number' répétitions de 'length' caractères'''
+def taille_cle(length, nbRepetitions, nbSequences):
+    '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. On cherche 'nbRepetitions' répétitions de 'length' caractères nbSequences fois.'''
     distances = [] #tableau contenant les distances entre deux répétitions
-    sequences = [] #contient des tuples : les séquences répétées et le gcd entre les distances
+    sequences = [] #contient des tuples : les séquences répétées et le gcd entre les distances de ses répétitions
     for ref in range(tailleMessage-length):
-        if len(distances) > number:
-            sequences.append([pattern, find_gcd(distances)])
-            if len(sequences) > 4:
+        # Conditions d'arrêt
+        if len(distances) > nbRepetitions: # Quand on a trouvé le bon nombre de répétitions
+            sequences.append([pattern, find_gcd(distances)]) # Ajout de la séquence et du pgcd entre les distances de ses répétitions dans le tableau -> [sequence,pgcd]
+            if len(sequences) > nbSequences: # Quand on a trouvé le bon nombre de séquences répétées nbRepetitions fois dans le texte
                 print(sequences)
                 break
+        # Recherche des répétitions
         last = ref
         pattern = message[ref:ref+length]
         distances = []
-        for i in range (ref+1, len(message)-length):
+        for i in range (ref+1, len(message)-length): 
                 test = message[i:i+length]
                 if test == pattern:
                     distances.append(i-last)
                     last = i
+                    """
                     print(str(ref) + ' "' + pattern + '"' + " pareil que " + str(i) + ' "' + test + '"')
                     print(distances)
+                    """
     return sequences[0][1] #il faudrait prendre le pgcd le plus fréquent pour plus de précision
 
-tailleCle = taille_cle(4,3)
+tailleCle = taille_cle(4, 3, 4) # taille de la séquence, nombre de répétitions, nombre de séquence vérifiant ces critères
 print(tailleCle)
 
-#Séparation du texte en n morceaux correspondants aux caractères encodés par le même indice de la clé
+# Séparation du texte en n morceaux correspondants aux caractères encodés par le même indice de la clé
 T = []
 for i in range(tailleCle):
     j = 0
