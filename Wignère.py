@@ -1,7 +1,7 @@
 from math import floor, ceil
 from fractions import gcd
 from functools import reduce
-from tqdm import tqdm, trange
+#from tqdm import tqdm, trange
 from collections import Counter # Recherche de caractère le plus fréquent
 
 def ouvrir_message(num):
@@ -86,7 +86,7 @@ def decrypte(cle):
 '''partie interface : '''
 
 # n° du message à ouvrir
-message = ouvrir_message(2) # Variable globale contenant le message crypté
+message = ouvrir_message(6) # Variable globale contenant le message crypté
 tailleMessage = len(message) # Variable globale contenant la taille du message
 ref = ord(" ") # caractère supposé le plus utilisé (e, a ou l'espace en francais)
 # Affichage des résultats

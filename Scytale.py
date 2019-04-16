@@ -1,6 +1,7 @@
 from math import floor, ceil
 
 with open("message1.txt","r") as file:
+    # Ouverture du message
     message = file.read()
     c_diametre = 2
     taille = len(message)
@@ -12,7 +13,7 @@ with open("message1.txt","r") as file:
         nbLignes = cle
         nbColonnes = int(ceil(len(message) / float(cle)))
         reste = (nbColonnes*nbLignes) - len(message)
-        tabClair = [''] * nbColonnes # Tableau contenant les fragments de message décodés
+        tabClair = [''] * nbColonnes # Tableau contenant les fragments de message d�codes
         col = 0
         ligne = 0
         for car in message:
