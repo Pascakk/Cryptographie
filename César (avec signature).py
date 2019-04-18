@@ -1,4 +1,6 @@
-# Fonctionne pour les messages 2 à 5
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Fonctionne pour les messages 2 Ã  5
 # erreur d'execution avec le 4
 
 # Parametres :
@@ -11,7 +13,7 @@ with open(fichier, encoding="utf8") as file:
     # Ouverture du message
     message = file.read()
 
-    # Création de la clé à partir des derniers caractères du message
+    # Création de la clé Ã  partir des derniers caractères du message
     for i in range(1, tailleCle + 1):
         cle.append(ord(message[-i]) - ord(signature[-i]))
     print(cle)
