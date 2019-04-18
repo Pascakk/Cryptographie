@@ -2,16 +2,16 @@ from math import floor, ceil
 from fractions import gcd
 from functools import reduce
 #from tqdm import tqdm, trange
-from collections import Counter # Recherche de caractÃ¨re le plus frÃ©quent
+from collections import Counter # Recherche de caractère le plus fréquent
 
 def ouvrir_message(num):
-    '''Ouvre le message correspondant au fichier donnÃ© en entrÃ©e'''
+    '''Ouvre le message correspondant au fichier donné en entrée'''
     with open("message" + str(num) + ".txt", encoding="utf8") as file:
         contenu = file.read()
     return contenu
 
 def plusFrequent(D):
-    '''prend un dictionnaire et renvoie la clÃ© dont l'indice est le plus grand'''
+    '''prend un dictionnaire et renvoie la clé dont l'indice est le plus grand'''
     maxi = 0
     car = ""
     for i in D:
@@ -21,24 +21,24 @@ def plusFrequent(D):
     return car
 
 def find_gcd(list):
-    '''renvoie le plus grand dÃ©nominateur commun entre les nombres d'une liste'''
+    '''renvoie le plus grand dénominateur commun entre les nombres d'une liste'''
     x = reduce(gcd, list)
     return x
 
 def taille_cle(length, nbRepetitions, nbSequences):
-    '''dÃ©termine la taille de la clÃ© par mesure de la distance entre des rÃ©pÃ©titions dans le texte. On cherche 'nbRepetitions' rÃ©pÃ©titions de 'length' caractÃ¨res nbSequences fois.'''
-    distances = [] # Tableau contenant les distances entre deux rÃ©pÃ©titions
-    sequences = [] # Contient les sÃ©quences trouvÃ©es vÃ©rifiant les propriÃ©tÃ©s demandÃ©es (utile pour le dÃ©bug)
-    taillesPossibles = [] # Contient les pgcd des distances entre les sÃ©quences rÃ©pÃ©tÃ©es
+    '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. On cherche 'nbRepetitions' répétitions de 'length' caractères nbSequences fois.'''
+    distances = [] # Tableau contenant les distances entre deux répétitions
+    sequences = [] # Contient les séquences trouvées vérifiant les propriétés demandées (utile pour le débug)
+    taillesPossibles = [] # Contient les pgcd des distances entre les séquences répétées
     for ref in range(tailleMessage-length):
         # Conditions d'arrÃªt
-        if len(distances) > nbRepetitions: # Quand on a trouvÃ© le bon nombre de rÃ©pÃ©titions
-            sequences.append(pattern) # Ajout de la sÃ©quence et du pgcd entre les distances de ses rÃ©pÃ©titions dans le tableau -> [sequence,pgcd]
+        if len(distances) > nbRepetitions: # Quand on a trouvé le bon nombre de répétitions
+            sequences.append(pattern) # Ajout de la séquence et du pgcd entre les distances de ses répétitions dans le tableau -> [sequence,pgcd]
             taillesPossibles.append(find_gcd(distances))
-            if len(sequences) > nbSequences: # Quand on a trouvÃ© le bon nombre de sÃ©quences rÃ©pÃ©tÃ©es nbRepetitions fois dans le texte
+            if len(sequences) > nbSequences: # Quand on a trouvé le bon nombre de séquences répétées nbRepetitions fois dans le texte
                 print(sequences)
                 break
-        # Recherche des rÃ©pÃ©titions
+        # Recherche des répétitions
         last = ref
         pattern = message[ref:ref+length]
         distances = []
@@ -51,10 +51,10 @@ def taille_cle(length, nbRepetitions, nbSequences):
                     print(str(ref) + ' "' + pattern + '"' + " pareil que " + str(i) + ' "' + test + '"')
                     print(distances)
                     """
-    return Counter(taillesPossibles).most_common()[0][0] # Renvoie la taille de la clÃ© (valeur possible la plus frÃ©quente)
+    return Counter(taillesPossibles).most_common()[0][0] # Renvoie la taille de la clé (valeur possible la plus fréquente)
 
 def find_cle(tailleCle):
-    # SÃ©paration du texte en n morceaux correspondants aux caractÃ¨res encodÃ©s par le mÃªme indice de la clÃ©
+    # Séparation du texte en n morceaux correspondants aux caractères encodés par le mÃªme indice de la clé
     T = []
     for i in range(tailleCle):
         j = 0
@@ -62,11 +62,11 @@ def find_cle(tailleCle):
         for j in range(floor(tailleMessage/tailleCle)):
             T[i].append(message[i+j*tailleCle])
     
-    #dÃ©cryptage de la clÃ© par analyse frÃ©quentielle
+    #décryptage de la clé par analyse fréquentielle
     cle = []
     for i in range(tailleCle):
         occurences = {}
-        for j in T[i]: #recherche du caractÃ¨re le plus frÃ©quent
+        for j in T[i]: #recherche du caractère le plus fréquent
             if j in occurences:
                 occurences[j]+=1
             else :
@@ -75,7 +75,7 @@ def find_cle(tailleCle):
     return cle
         
 def decrypte(cle):
-    # DÃ©cryptage du message
+    # Décryptage du message
     tailleCle = len(cle)
     clair = ""
     indice = 0
@@ -85,11 +85,11 @@ def decrypte(cle):
 
 '''partie interface : '''
 
-# nÂ° du message Ã  ouvrir
-message = ouvrir_message(6) # Variable globale contenant le message cryptÃ©
+# n° du message à ouvrir
+message = ouvrir_message(6) # Variable globale contenant le message crypté
 tailleMessage = len(message) # Variable globale contenant la taille du message
-ref = ord(" ") # caractÃ¨re supposÃ© le plus utilisÃ© (e, a ou l'espace en francais)
-# Affichage des rÃ©sultats
-cle = find_cle(taille_cle(4, 3, 4)) # taille de la sÃ©quence, nombre de rÃ©pÃ©titions, nombre de sÃ©quences vÃ©rifiant ces critÃ¨res
+ref = ord(" ") # caractère supposé le plus utilisé (e, a ou l'espace en francais)
+# Affichage des résultats
+cle = find_cle(taille_cle(4, 3, 4)) # taille de la séquence, nombre de répétitions, nombre de séquences vérifiant ces critères
 print(decrypte(cle)) # Message en clair
 print(cle) # cle correcpondant au message
