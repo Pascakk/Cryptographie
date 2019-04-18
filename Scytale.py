@@ -11,11 +11,11 @@ with open("message1.txt","r") as file:
     lignes = floor(taille/dist)
     
     def scytale(cle, message):
-        """ Prend en argument un entier (la clï¿½) et une chaine de caractï¿½res (le message ï¿½ dï¿½coder) et renvoie un chaine de caractï¿½res (le message dï¿½codï¿½)"""
+        """ Prend en argument un entier (la clé) et une chaine de caractères (le message à décoder) et renvoie un chaine de caractères (le message décodé)"""
         nbLignes = cle
         nbColonnes = int(ceil(len(message) / float(cle)))
         reste = (nbColonnes*nbLignes) - len(message)
-        tabClair = [''] * nbColonnes # Tableau contenant les fragments de message dï¿½codes
+        tabClair = [''] * nbColonnes # Tableau contenant les fragments de message décodes
         col = 0
         ligne = 0
         for car in message:
