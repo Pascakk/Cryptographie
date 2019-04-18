@@ -9,12 +9,13 @@ def ouvrir_message(num):
         contenu = file.read()
     return contenu
 
-def enigma(roues, posRoues, message):
+def enigma(roues, posRoues, message, ordre):
+    '''Décode le message en connaissant le nombre de roues et les chiffres présents sur chacune (roues) et en prenant une position de départ pour chaque roue (posRoues)'''
     clair = ""
     roueActuelle = 0
     for i in range(len(message)):
-        print(roueActuelle)
-        clair += str(ord(message[i])-roues[roueActuelle][posRoues[roueActuelle]])
+        print(posRoues[roueActuelle])
+        clair += chr(ord(message[i])-(roues[roueActuelle][posRoues[roueActuelle]]*ordre)) # encrypte si ordre = -1, décrypte si ordre = 1
         posRoues[roueActuelle] += 1
         if posRoues[roueActuelle] == len(roues[0]):
             posRoues[roueActuelle] = 0
@@ -28,4 +29,4 @@ def enigma(roues, posRoues, message):
 
 # n° du message à ouvrir
 message = ouvrir_message(6) # Variable globale contenant le message crypté
-print(enigma(roues, [0,0,0], message))
+print(enigma(roues, [0,0,0], message, 1))
