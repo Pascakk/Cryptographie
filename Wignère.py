@@ -33,7 +33,7 @@ def taille_cle(length, nbRepetitions, nbSequences):
     sequences = [] # Contient les séquences trouvées vérifiant les propriétés demandées (utile pour le débug)
     taillesPossibles = [] # Contient les pgcd des distances entre les séquences répétées
     for ref in range(tailleMessage-length):
-        # Conditions d'arrÃªt
+        # Conditions d'arrêt
         if len(distances) > nbRepetitions: # Quand on a trouvé le bon nombre de répétitions
             sequences.append(pattern) # Ajout de la séquence et du pgcd entre les distances de ses répétitions dans le tableau -> [sequence,pgcd]
             taillesPossibles.append(find_gcd(distances))
