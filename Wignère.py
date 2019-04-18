@@ -28,7 +28,8 @@ def find_gcd(list):
     return x
 
 def taille_cle(length, nbRepetitions, nbSequences):
-    '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. On cherche 'nbRepetitions' répétitions de 'length' caractères nbSequences fois.'''
+    '''détermine la taille de la clé par mesure de la distance entre des répétitions dans le texte. 
+    On cherche 'nbRepetitions' répétitions de 'length' caractères nbSequences fois.'''
     distances = [] # Tableau contenant les distances entre deux répétitions
     sequences = [] # Contient les séquences trouvées vérifiant les propriétés demandées (utile pour le débug)
     taillesPossibles = [] # Contient les pgcd des distances entre les séquences répétées
@@ -56,7 +57,7 @@ def taille_cle(length, nbRepetitions, nbSequences):
     return Counter(taillesPossibles).most_common()[0][0] # Renvoie la taille de la clé (valeur possible la plus fréquente)
 
 def find_cle(tailleCle):
-    # Séparation du texte en n morceaux correspondants aux caractères encodés par le mÃªme indice de la clé
+    # Séparation du texte en n morceaux correspondants aux caractères encodés par le même indice de la clé
     T = []
     for i in range(tailleCle):
         j = 0

@@ -22,6 +22,11 @@ with open(fichier, encoding="utf8") as file:
     # Reconstitution du message
     for i in range(1, len(message)):
         if message[-i] != "\n":
+            try:
+                caractere = ord(message[-i]) - cle[posCle]
+                assert caractere >= 0, f"Caractere {caractere} est négatif. {ord(message[-i])}, {cle[posCle]}"
+            except AssertionError:
+                caractere = 0
             decrypte = chr(caractere) + decrypte
         else:
             decrypte = "\n" + decrypte
