@@ -10,8 +10,7 @@ def ouvrir_message(num):
     return contenu
 
 def enigma(roues, posRoues, message, ordre):
-    '''Décode le message en connaissant le nombre de roues et les chiffres présents 
-    sur chacune (roues) et en prenant une position de départ pour chaque roue (posRoues)'''
+    '''Décode le message en connaissant le nombre de roues et les chiffres présents sur chacune (roues) et en prenant une position de départ pour chaque roue (posRoues)'''
     clair = ""
     roueActuelle = 0
     for i in range(len(message)):
@@ -20,9 +19,10 @@ def enigma(roues, posRoues, message, ordre):
         posRoues[roueActuelle] += 1
         if posRoues[roueActuelle] == len(roues[0]):
             posRoues[roueActuelle] = 0
-            roueActuelle += 1
-            if roueActuelle == len(roues):
-                roueActuelle = 0            
+            posRoues[roueActuelle+1] += 1
+        roueActuelle += 1
+        if roueActuelle == len(roues):
+            roueActuelle = 0
     return clair
 
 '''partie interface : '''
